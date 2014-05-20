@@ -2,7 +2,8 @@
 layout: post
 title: "hello snowlotus"
 description: ""
-category: 
+category: tt
+comments:false
 tags: []
 ---
 {% include JB/setup %}
