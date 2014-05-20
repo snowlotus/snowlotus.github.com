@@ -2,7 +2,7 @@
 layout: post
 title: "hello snowlotus"
 description: ""
-category: tt
+category: 
 comments:false
 tags: []
 ---
