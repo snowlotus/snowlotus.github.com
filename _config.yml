@@ -1,10 +1,10 @@
 # This is the default format. 
 # For more see: http://jekyllrb.com/docs/permalinks/
-permalink: /post/:year-:month-:day-:title.html
+permalink: /article/:year-:month-:day-:title.html
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 pygments: highlighter
-pageNum: 8
+paginate: 8
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -76,6 +76,7 @@ JB :
   tags_path : /tags.html
   atom_path : /atom.xml
   rss_path : /rss.xml
+  about_path : /about.html
 
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
@@ -96,7 +97,7 @@ JB :
       num_posts: 5
       width: 580
       colorscheme: light
-   
+
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
   # Set 'provider' to false to turn analytics off globally.
@@ -122,7 +123,10 @@ JB :
   #
   sharing :
     provider : false
-    
+
+  tags_list:
+    provider : false
+
   # Settings for all other include helpers can be defined by creating 
   # a hash with key named for the given helper. ex:
   #
@@ -133,4 +137,4 @@ JB :
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
-  
+
