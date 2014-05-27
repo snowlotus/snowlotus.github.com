@@ -1,9 +1,9 @@
 # This is the default format. 
 # For more see: http://jekyllrb.com/docs/permalinks/
-permalink: /:categories/:year/:month/:day/:title 
+permalink: /post/:year-:month-:day-:title.html
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-pygments: true
+pygments: highlighter
 pageNum: 8
 
 # Themes are encouraged to use these universal variables 
