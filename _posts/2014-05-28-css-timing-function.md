@@ -8,7 +8,7 @@ tags: []
 {% include JB/setup %}
 
 >原文地址：[Understanding CSS Timing Functions](http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/)  
->译者：[snowlotus]({{ site.production_url }}) 
+>译&nbsp; &nbsp;者：[snowlotus]({{ site.production_url }}) 
 
 #### 各位，屏住呼吸做好准备，我们要开启一个令人激动万分的旅程去深入css timing 函数的世界一窥究竟！
 
@@ -68,13 +68,13 @@ div {
 
 你可能对贝塞尔曲线这一术语还不是很熟悉，不过我敢打赌你肯定已经一睹它的真容了，如果你曾用过图形编辑软件，你很可能已经神不知鬼不觉的创建过一条贝塞尔曲线了。没错，当你使用画笔或者路径工具画出一条漂亮又平滑的曲线时，这条曲线就是贝塞尔曲线。不管你见过也好画过也罢，总之贝塞尔曲线正是这一章要讲的重点，**它也就是timing函数背后的魔力所在**，它对应的图形正好就描述出了这一整个的加速过程。
 
-![This Bézier curve translates to the ease keyword.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/01-bezier-curve-ease.jpg)
+![This Bézier curve translates to the ease keyword.]({{ IMAGE_PATH }}/01-bezier-curve-ease.jpg)
 
 *`Ease`对应的贝塞尔曲线*
 
 你应该和我第一次看到这个图形时有一样的疑惑，这货到底是怎么通过4个点就形成了这条线的呢！我一下子也没办法三言两语就跟你说清楚，不过好在有个来自[维基百科](http://en.wikipedia.org/wiki/File:Bezier_3_big.gif)的动态图很清晰的解释出了这一原理。
 
-![A cubic Bézier curve being drawn.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/02-bezier-curve-drawing.gif)
+![A cubic Bézier curve being drawn.]({{ IMAGE_PATH }}/02-bezier-curve-drawing.gif)
 
 *贝塞尔曲线的绘制过程（图片来源：[维基百科](http://en.wikipedia.org/wiki/File:Bezier_3_big.gif)）*
 
@@ -107,7 +107,7 @@ transition-timing-function: cubic-bezier(.42, 0, .58, 1);
 
 ```
 
-![A perfectly symmetrical Bézier curve, which means the animation will ease in to full speed and then ease out at exactly the same rate.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/03-bezier-curve-ease-in-out.jpg)
+![A perfectly symmetrical Bézier curve, which means the animation will ease in to full speed and then ease out at exactly the same rate.]({{ IMAGE_PATH }}/03-bezier-curve-ease-in-out.jpg)
 
 *一个完美对称的贝塞尔曲线，也说明了这个动画是以一个相同以及平滑的速度渐入和淡出的。*
 
@@ -129,7 +129,7 @@ transition-timing-function: cubic-bezier(.25, .1, .25, 1);
 ```
 
 
-![The curve for the keyword ease, eases in at a faster pace before easing out much more gradually.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/04-bezier-curve-ease.jpg)
+![The curve for the keyword ease, eases in at a faster pace before easing out much more gradually.]({{ IMAGE_PATH }}/04-bezier-curve-ease.jpg)
 
 *`Ease`曲线的开始速度快，结束速度相对平缓。*
 
@@ -148,7 +148,7 @@ transition-timing-function: cubic-bezier(0, 0, .58, 1);
 
 ```
 
-![Bézier Curve for the ease-in keyword, left and the ease-out keyword, right.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out-500.jpg)
+![Bézier Curve for the ease-in keyword, left and the ease-out keyword, right.]({{ IMAGE_PATH }}/05-bezier-curve-ease-in-ease-out-500.jpg)
 
 *Ease-in（左）和ease-out（右）对应的贝塞尔曲线（[点此看大图](http://www.smashingmagazine.com/wp-content/uploads/2014/04/05-bezier-curve-ease-in-ease-out.jpg)）*
 
@@ -162,7 +162,7 @@ transition-timing-function: cubic-bezier(0, 0, 1, 1);
 
 ```
 
-![The linear](http://www.smashingmagazine.com/wp-content/uploads/2014/04/06-bezier-curve-linear.jpg)
+![The linear]({{ IMAGE_PATH }}/06-bezier-curve-linear.jpg)
 
 
 *`linear` timiing-function对应的动画全程都是匀速的。*
@@ -179,7 +179,7 @@ transition-timing-function: cubic-bezier(0, 0, 1, 1);
 
 不过好在有Lea Verou这样致力于推动CSS发展的人存在！Lea发明了所谓的三次方贝塞尔曲线，它其实是一个设置不同的自定义的值然后预览并将其与其它不同的曲线在操场上的运行效果做比较的一个工具。这就意味着可以将你从设置cubic-bezier（）函数精确到小数点的值的无聊工作中解救出来，你需要做的只是访问[Cubic Bezier](http://cubic-bezier.com/#.17,.67,.83,.67) 网站，随意设定几个值直到它达到你预期的效果就行了,很方便。
 
-![Lea Verou's superbly useful cubic-bezier.com](http://www.smashingmagazine.com/wp-content/uploads/2014/04/07-cubic-bezier-site-500.jpg)
+![Lea Verou's superbly useful cubic-bezier.com]({{ IMAGE_PATH }}/07-cubic-bezier-site-500.jpg)
 
 *Lea Verou超级雄伟的工具[Cubic Bezier](http://cubic-bezier.com/#.17,.67,.83,.67)([点此看大图](http://www.smashingmagazine.com/wp-content/uploads/2014/04/07-cubic-bezier-site.jpg))*
 
@@ -199,7 +199,7 @@ transition-timing-function: cubic-bezier(.1, .9, .9, .1);
 
 ```
 
-![Example for a custom Bézier curve.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/08-custom-bezier-curve.jpg)
+![Example for a custom Bézier curve.]({{ IMAGE_PATH }}/08-custom-bezier-curve.jpg)
 
 *自定义贝塞尔曲线示例*
 
@@ -213,7 +213,7 @@ transition-timing-function: cubic-bezier(.1, .9, .9, .1);
 
 速度轴如你所想的以0作为起点，以1作为终点。曲线随着变量点一路向北直到达到整个动画的重点。不过当把点1和点2的值设定在超过0-1的范围时，就会使得动画起到一个完全逆转的效果。和以前一样，上图有真相：
 
-![Custom Bézier curve using value outside the typical 0-1 range.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/09-custom-bezier-curve-outside-range.jpg)
+![Custom Bézier curve using value outside the typical 0-1 range.]({{ IMAGE_PATH }}/09-custom-bezier-curve-outside-range.jpg)
 
 *超过0-1范围的自定义贝塞尔曲线*
 
@@ -228,7 +228,7 @@ transition-timing-function: cubic-bezier(.1, .9, .9, .1);
 <p data-height="268" data-theme-id="6107" data-slug-hash="xcCqj" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/stephengreig/pen/xcCqj/'>xcCqj</a> by Stephen Greig (<a href='http://codepen.io/stephengreig'>@stephengreig</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>
 
-![Custom Bézier curve using value outside the typical 0-1 range.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/10-custom-bezier-curve-outside-range.jpg)
+![Custom Bézier curve using value outside the typical 0-1 range.]({{ IMAGE_PATH }}/10-custom-bezier-curve-outside-range.jpg)
 
 *被设定了负值的自定义贝塞尔曲线*
 
@@ -249,7 +249,7 @@ transition-timing-function: cubic-bezier(.65, 1.95, .03, .32);
 ```
 
 
-![Custom Bézier curve to emulate a bouncing balloon.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/11-bezier-curve-bouncing-balloon.jpg)
+![Custom Bézier curve to emulate a bouncing balloon.]({{ IMAGE_PATH }}/11-bezier-curve-bouncing-balloon.jpg)
 
 *模拟弹跳着的气球的自定义贝塞尔曲线*
 
@@ -332,7 +332,7 @@ transition-timing-function: steps(4, end);
 
 Start值使得动画在一开始就被拆分成了几步，而end则是以动画的结尾来拆分的。以之前那个移动着的箱子为例，下图就很好的说明了这两个不同的值引发的差别。
 
-![The difference between the start and end value in the steps() function.](http://www.smashingmagazine.com/wp-content/uploads/2014/04/12-steps-start-end.jpg)
+![The difference between the start and end value in the steps() function.]({{ IMAGE_PATH }}/12-steps-start-end.jpg)
 
 *`steps（）`函数中start和end值对应的差异。*
 
@@ -365,7 +365,7 @@ div:target {
 
 首先需要规整的盒子（125像素宽）和一张包含16帧动画图片的背景图（2000像素宽）。背景图在初始状态下是和盒子的左边缘齐平的，所以我们现在需要一直移动背景图片让这16帧依次经过矩形窗口。如果是用常规的动画方式来实现的会背景图作为一个整体从盒子的左边移入移出，而如果是使用steps()函数的的话，可以将背景图分成16步来做移动，这样就能保证每一帧都能如预期的那样从矩形窗口前经过。就这样用一个css transition就实现了一个基本的卡通动画了！
 
-![This GIF demonstrates the concept of the background image passing through the window in steps](http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept-500.gif)
+![This GIF demonstrates the concept of the background image passing through the window in steps]({{ IMAGE_PATH }}/13-frames-concept-500.gif)
 
 *这个GIF动画就阐述了背景图一步步从窗口”的出入的过程。（[点击看大图](http://www.smashingmagazine.com/wp-content/uploads/2014/04/13-frames-concept.gif)）*
 
