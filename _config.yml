@@ -84,6 +84,8 @@ JB :
   atom_path : /atom.xml
   rss_path : /rss.xml
   about_path : /about.html
+  demo_path : /experiment.html
+  tool_path : /tool.html
 
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
@@ -112,7 +114,7 @@ JB :
   analytics :
     provider : baidu 
     baidu :
-      tracking_id : '3Fe67de6c981f9ee6264dcf33cd1552940'
+      tracking_id : 'e67de6c981f9ee6264dcf33cd1552940'
     google : 
         tracking_id : 'UA-123-12'
     getclicky :

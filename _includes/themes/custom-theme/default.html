@@ -44,15 +44,12 @@
           <li{% if page.url == home_url %} class="active"{% endif %}>
             <a href="{{ HOME_PATH }}" rel="nofollow" title="首页">首页</a>
           </li>
-          <li{% if page.url == site.JB.categories_path %} class="active"{% endif %}>
-            <a href="{{ site.JB.categories_path }}" rel="nofollow" title="分类">分类</a>
+          <li{% if page.url == site.JB.demo_path %} class="active"{% endif %}>
+            <a href="{{ site.JB.demo_path }}" rel="nofollow" title="试验场">试验场</a>
           </li>
-          <li{% if page.url == site.JB.tags_path %} class="active"{% endif %}>
-            <a href="{{ site.JB.tags_path }}" rel="nofollow" title="标签">标签</a>
+          <li{% if page.url == site.JB.tool_path %} class="active"{% endif %}>
+            <a href="{{ site.JB.tool_path }}" rel="nofollow" title="工具">工具</a>
           </li>
-         <!--  <li{% if page.url == site.JB.messages_path %} class="active"{% endif %}>
-            <a href="{{ site.JB.messages_path }}" rel="nofollow" title="留言板">留言板</a>
-          </li> -->
           <li{% if page.url == site.JB.about_path %} class="active"{% endif %}>
             <a href="{{ site.JB.about_path }}" rel="nofollow" title="关于我">关于我</a>
           </li>
@@ -76,9 +73,6 @@
         <section{% if page.title == '分类' %} class="active"{% endif %}>
           {% include widgets/categories_list %}
         </section>
-        <section{% if page.title == '标签' %} class="active"{% endif %}>
-          {% include widgets/tag_cloud %}
-        </section>
         {% include widgets/fixed_container %}
       </aside>
 
@@ -101,7 +95,6 @@
       </p>
     </footer>
   </div>
-
   {% include JB/analytics %}
   
 </body>

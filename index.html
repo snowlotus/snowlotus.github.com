@@ -10,18 +10,15 @@ description: ""
 <section>
   {% for post in site.posts %}
   <article class="nested">
-
     <header>
       <h2><a href="{{ post.url }}" title="查看《{{ post.title }}》">{{ post.title }}</a></h2>
     </header>
-
     <section>
       <p>
         {{ post.content | truncate:300 }}
       </p>
       <a class="button-link" href="{{ post.url }}" rel="nofollow" title="查看全文">read more</a>
     </section>
-
     <footer>
       <p>
         发表日期：<a href="{{ site.JB.archive_path }}#{{ post.date | date: '%B-%Y' }}" rel="nofollow" title="查看此月所有文章">{{ post.date | date: "%d %B %Y" }}</a>，
@@ -30,7 +27,6 @@ description: ""
         评论：<a href="{{ post.url }}#ds-thread" rel="nofollow" title="查看此文章的评论"><span class="ds-thread-count" data-thread-key="{{ post.title }}" data-count-type="comments"></span></a>{% endif %}
       </p>
     </footer>
-
   </article>
   {% endfor %}
 
