@@ -15,7 +15,7 @@ description: ""
     </header>
     <section>
       <p>
-        {{ post.content | truncate:300 }}
+       {{ post.content | strip_html | truncate:300 }}
       </p>
       <a class="button-link" href="{{ post.url }}" rel="nofollow" title="查看全文">read more</a>
     </section>
