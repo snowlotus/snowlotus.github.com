@@ -7,7 +7,8 @@ tags: []
 ---
 {% include JB/setup %}
 
-今天被测试提了一个bug，问题表现是在IE下图片的懒加载不执行，即图片加载不出来。这部分的逻辑非常简单，就是遍历页面上的img，将图片的src替换成标签上的某个伪属性对应的字符串即可。
+
+I got a bug from our tester today. She told me that the img lazyload function doesn't work in ie 8 and below,which means that all the img elements can't be load and only shows the default imgs.It's really weird,cause the logic of lazyloda is really simple:replace the img's src with the value of the img's pseudo-attribute data-original, just as the code below:
 
 ```javascript
     var imgCache={};
@@ -32,7 +33,8 @@ tags: []
     });
 ```
 
-对着代码分析半天，始终觉得代码没有哪里有问题。清除浏览器缓存，图片又能正常加载，只是刷新之后又不能执行，第二次，第二次……慢着，难道是IE下图片加载在第二次没执行，加个alert，果然印证了我的想法
+I analysed the code,tyr to find out something wrong ,but nothing. Just as the moment i clear the browser data cache and refresh the browser by pressing F5,the img show again,and i refresh it the second time,this time the bug show again.Wait,the second time? Is it means the event of img onload doesn't be fired? so i add an alert in the code ,there is nothing show in it ,it improved my thought .
+
 
 ```javascript
 var img = new Image;
@@ -41,8 +43,12 @@ img.onload = function(){
 };
 ```
 
-原来第2次加载的图片不是从服务器去加载，而是直接从缓冲区加载，这样当src被赋值时onload事件就会立即执行，而如果src赋值的位置不对那就会让onload事件无法触发，难过此时查看img标签时src没有被替换程`data-original`的值，但是img标签上已经有了`complete`属性，因此此处只需将`o.src=src`位置提取出来即可。
 
-实在是一个不值一提的小bug，但在没发现问题本质之前苦苦思索不得其解，再加上之前一直用的同一段代码来实现webapp上懒加载，有点过于经验之谈，殊不知真是被webkit的惯坏了。
+If the image is in the browser cache, the load event will be fired immediately when the .src value is set. If your load handler is not already in place, you will miss that event.So that's the point the src didn't be replaced but there is an attribute of `complete` on the img element.
 
-不管怎样，记录下来，当做小知识点也好当做解决问题时的思路方向也好，加深印象，以后就不会犯这种低级错误了！！！
+
+
+How small a bug it is !But before you found the reason,how can you konw what it is and how can you get it solved,all you do is just debuging and debuging.Good judgement comes with experience, but experience comes from bad judgement.Yes,that's right,i got confused by bad judgement,cause i alaways used this block of code the complement the lazyload function in web app,and no errors or bugs really happen ,so i mistook it was ok.I was spoiled by  'webkit'.
+
+
+Anyway, i write it down,may be it's for a knowledge tip,may be it's for a solution to a problem or a way of thinking.who cares! I just wirte it down and keep it in mind and let  myself get rid of a stupid mistake like this .
