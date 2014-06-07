@@ -2,7 +2,7 @@
 layout: post
 title: "[译]最小化请求开销"
 description: ""
-categories:[翻译 , pagespeed] 
+category: 翻译
 tags: []
 ---
 {% include JB/setup %}
