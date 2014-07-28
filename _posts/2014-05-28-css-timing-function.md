@@ -8,7 +8,7 @@ tags: []
 {% include JB/setup %}
 
 >原文地址：[Understanding CSS Timing Functions](http://www.smashingmagazine.com/2014/04/15/understanding-css-timing-functions/)  
->译&nbsp; &nbsp;者：[snowlotus]({{ site.production_url }}) 
+>译&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;者：[snowlotus]({{ site.production_url }}) 
 
 #### 各位，屏住呼吸做好准备，我们要开启一个令人激动万分的旅程去深入css timing 函数的世界一窥究竟！
 
