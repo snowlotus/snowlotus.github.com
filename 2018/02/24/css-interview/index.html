@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta name="generator" content="Hexo 3.8.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="bolg">
+  <meta name="description" content="fe,personal,record">
   <meta name="keyword" content="vuejs">
   
     <link rel="shortcut icon" href="/css/images/logo.png">
@@ -27,7 +27,7 @@
 <script src="/js/gitment.js"></script>
 </head>
 <div class="wechat-share">
-  <img src="/blog/css/images/logo.png" />
+  <img src="/blog/css/images/logo.png">
 </div>
 
   <body>
@@ -265,7 +265,7 @@
 <h4 id="8-清除浮动"><a href="#8-清除浮动" class="headerlink" title="8. 清除浮动"></a>8. 清除浮动</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">  <span class="attribute">zoom</span>:<span class="number">1</span></span><br><span class="line">  &amp;::after &#123;</span><br><span class="line">    content: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">visibility</span>: hidden;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="9-移动端布局的媒体查询"><a href="#9-移动端布局的媒体查询" class="headerlink" title="9. 移动端布局的媒体查询"></a>9. 移动端布局的媒体查询</h4><p>通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适应相应的设备的显示。</p>
 <ul>
-<li><p><head></head>里面</p>
+<li><p><head><meta name="generator" content="Hexo 3.8.0"></head>里面</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"xxx.css"</span> <span class="attr">media</span>=<span class="string">"only screen and (max-device-width:480px)"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>CSS</p>
@@ -285,11 +285,11 @@
                 <div class="tags">
                     <span>Tags:</span>
                     
-  <a href="/tags#CSS" >
+  <a href="/tags#CSS">
     <span class="tag-code">CSS</span>
   </a>
 
-  <a href="/tags#面试" >
+  <a href="/tags#面试">
     <span class="tag-code">面试</span>
   </a>
 
@@ -340,7 +340,7 @@
 
 <script>
   (function () {
-    var url = 'https://snowlotus.github.io/blog/2018/02/24/css-interview/';
+    var url = 'https://snowlotus.github.io/2018/02/24/css-interview/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -394,11 +394,11 @@
 
     var gitment = new Gitment({
         id: '总会收集一些有用的 CSS', // 可选。默认为 location.href
-        owner: 'KuangPF',
-        repo: 'blog',
+        owner: 'snowdrop',
+        repo: 'snowlotus.github.com',
         oauth: {
-            client_id: 'b72ce2d9cb2b8c5175a5',
-            client_secret: 'ed963635170152c37f7c7c087049f00d01055b6c',
+            client_id: '389c5a6a03d1cb1b5eba',
+            client_secret: '890c172d5726139fe9b3ab1746c81fe9e806a92d',
         },
     })
     gitment.render('container')
