@@ -11,7 +11,7 @@
   
   <title>
     
-      前端API速查 | snowdrop
+      git操作中的merge和rebase | snowdrop
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,8 +117,8 @@
 
     <div class="page-content" style="min-height:100%">
     <div id="article-banner">
-        <h2>前端API速查</h2>
-        <p class="post-date">2019-04-11</p>
+        <h2>git操作中的merge和rebase</h2>
+        <p class="post-date">2019-06-12</p>
         <div class="arrow-down">
             <a href="javascript:;"></a>
         </div>
@@ -126,33 +126,32 @@
     <main class="app-body flex-box" style="padding-bottom:70px;margin-top:20px">
     <!-- Article START -->
         <article class="post-article">
-            <section class="markdown-content"><h2 id="awesome-cheatsheets-collection"><a href="#awesome-cheatsheets-collection" class="headerlink" title="awesome cheatsheets collection"></a><a href="https://lecoupa.github.io/awesome-cheatsheets/" target="_blank" rel="noopener">awesome cheatsheets collection</a></h2><p>Awesome cheatsheets for popular programming languages, frameworks and development tools.<br> They include everything you should know in one single file</p>
-<h2 id="Rico’s-cheatsheets-collection"><a href="#Rico’s-cheatsheets-collection" class="headerlink" title="Rico’s cheatsheets collection"></a><a href="https://devhints.io/" target="_blank" rel="noopener">Rico’s cheatsheets collection</a></h2><h2 id="注释规范"><a href="#注释规范" class="headerlink" title="注释规范"></a><a href="https://devhints.io/jsdoc" target="_blank" rel="noopener">注释规范</a></h2><p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1g1ygyiw8c1j31hj0u0qas.jpg" alt="注释规范"></p>
-<h2 id="es2015-新特性"><a href="#es2015-新特性" class="headerlink" title="es2015 新特性"></a><a href="https://devhints.io/es6" target="_blank" rel="noopener">es2015 新特性</a></h2><p><img src="https://www.strilliant.com/images/1*l90SMm_aR9UD8m9QDu3kKA.png" alt="es2015"></p>
-<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a><a href="http://overapi.com/javascript" target="_blank" rel="noopener">Javascript</a></h2><p><img src="https://www.strilliant.com/images/1*sqkshvsmr7hN4Ab2A7GJzg.png" alt="javascript"></p>
-<h2 id="js正则表达式"><a href="#js正则表达式" class="headerlink" title="js正则表达式"></a><a href="https://www.debuggex.com/cheatsheet/regex/javascript" target="_blank" rel="noopener">js正则表达式</a></h2><p><img src="https://www.strilliant.com/images/1*jHRyyzwj9z11ouDkY9dK9Q.png" alt="正则表达式"></p>
-<h2 id="vue"><a href="#vue" class="headerlink" title="vue"></a><a href="https://vuejs-tips.github.io/cheatsheet/" target="_blank" rel="noopener">vue</a></h2><p><img src="https://www.strilliant.com/images/1*xKmyDitGEXGg1J9FBpbqHw.png" alt="vuejs"></p>
-<h2 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a><a href="https://vuejs-tips.github.io/vuex-cheatsheet/" target="_blank" rel="noopener">vuex</a></h2><p><img src="https://www.strilliant.com/images/1*M-UIS7PPmvh_HuZVTqarzA.png" alt="vuex"></p>
-<h2 id="react"><a href="#react" class="headerlink" title="react"></a><a href="https://devhints.io/react" target="_blank" rel="noopener">react</a></h2><p><img src="https://www.strilliant.com/images/1*VhtpckI6V0tckQa3uM9MbA.png" alt="react"></p>
-<h2 id="redux"><a href="#redux" class="headerlink" title="redux"></a><a href="https://github.com/linkmesrl/react-journey-2016/blob/master/resources/egghead-redux-cheat-sheet-3-2-1.pdf" target="_blank" rel="noopener">redux</a></h2><p><img src="https://www.strilliant.com/images/1*KJQ-XK2yK-903OXHCRQpLw.png" alt="redux"></p>
-<h2 id="Flexbox"><a href="#Flexbox" class="headerlink" title="Flexbox"></a><a href="https://yoksel.github.io/flex-cheatsheet/" target="_blank" rel="noopener">Flexbox</a></h2><p><img src="https://www.strilliant.com/images/1*q8xJa81twW6J-U_URHOJvQ.png" alt="Flexbox"></p>
-<h2 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a><a href="https://devhints.io/markdown" target="_blank" rel="noopener">markdown</a></h2><p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1g1yg5r0wvnj31ny0u0afl.jpg" alt="markdown"></p>
-</section>
+            <section class="markdown-content"><p>使用git有几年了，平时最常用到的就是工具<code>source tree</code>和<code>smartgit</code>中的pull 、push、rebase、merge等操作，尤其是合并代码的时候,rebase和merge自然是都会用到的，但从来没有深究过这两种合并代码的方式到底有何差别，使用场景是什么，今天决定一探究竟并记录下来。</p>
+<h1 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h1><p>首先，两者的诞生都是为了解决同样的问题：将一个分支的改变合并到另一个分支上。但两者的实现方式还是有很多差异。</p>
+<p>具体差异借助一个开发中常用的场景来加以说明：当你在一个开发分支上开发一个新功能的时候，团队其他人在master上commit了若干个新的提交，于是分支的历史变成了如下图这样。由于master上的commit对你正在使用的开发分支feature是有意义的，为了将master上的commit合入你的开发feature分支上，你有两个选择：merge或者rebase<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8ke7gu5j20bg07zdfq.jpg" alt="提交历史"></p>
+<h1 id="选择merge"><a href="#选择merge" class="headerlink" title="选择merge"></a>选择merge</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout feature </span><br><span class="line">git merge master</span><br></pre></td></tr></table></figure>
+<p>合并后，feature分支的提交历史变成了如下图<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8kt3q6aj20da07wa9z.jpg" alt="merge后feature分支的提交log"></p>
+<p>从图中我们可以看到，最终两个分支的历史以分叉线的方式汇合到一起，且在汇合出是一个多出来的新的commit <code>Merge branch &#39;master&#39; into feature</code>.<br><strong>由此我们可以得出使用merge操作的特征</strong></p>
+<ul>
+<li>merge是一个非破坏性的操作，原有的已经存在的提交（时间先后顺序、log线）等都得到了保留</li>
+<li>产生了一个外来的代表合并的commit。如果master分支非常活跃，会对feature造成大量的历史污染，造成其他开发者难以看懂或理解你的项目的历史记录。</li>
+</ul>
+<h1 id="选择-rebase"><a href="#选择-rebase" class="headerlink" title="选择 rebase"></a>选择 rebase</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout feature </span><br><span class="line">git rebase master</span><br></pre></td></tr></table></figure>
+<p>合并后，feature分支的提交历史变成了如下图<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8kzq9r3j20fq07vwee.jpg" alt="rebase后feature分支的提交log"></p>
+<p>从上图我们可以看出，整个master分支移动到了feature分支上，且没有使用一个代表 merging 的 commit，整个项目提交历史很清晰。<br><strong>由此我们可以得出使用rebase操作的特征</strong></p>
+<ul>
+<li>没有引入不必要的commit</li>
+<li>整个提交历史是线性无分叉的，便于阅读及清晰操作整个历史记录。但清晰的commit的代价就是失去了可追溯性，因为从现有的提交历史中，已无法得知是在哪个时间点及提交点将上游的master分支合并进入feature分支的。<h2 id="交互式rebase"><a href="#交互式rebase" class="headerlink" title="交互式rebase"></a>交互式rebase</h2>rebase还有一个更高级的用法：交互式变基,除了完成最终的分支合并之外，交互式变基可以帮助我们在变基过程中，增加自己的操作（<strong>合并提交、拆分提交、删除提交</strong>），然后再变基。虽然平时使用得不多，但借助它也可以产生一些神奇的效果，在此也一并简单介绍下。</li>
+</ul>
+<p>交互式rebase对应命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reabse -i</span><br></pre></td></tr></table></figure></p>
+<h3 id="合并提交"><a href="#合并提交" class="headerlink" title="合并提交"></a>合并提交</h3><h3 id="拆分提交"><a href="#拆分提交" class="headerlink" title="拆分提交"></a>拆分提交</h3><h3 id="删除提交"><a href="#删除提交" class="headerlink" title="删除提交"></a>删除提交</h3></section>
             <!-- Tags START -->
             
                 <div class="tags">
                     <span>Tags:</span>
                     
-  <a href="/tags#API">
-    <span class="tag-code">API</span>
-  </a>
-
-  <a href="/tags#备忘单">
-    <span class="tag-code">备忘单</span>
-  </a>
-
-  <a href="/tags#sheet">
-    <span class="tag-code">sheet</span>
+  <a href="/tags#git merge rebase">
+    <span class="tag-code">git merge rebase</span>
   </a>
 
 
@@ -191,7 +190,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#awesome-cheatsheets-collection"><span class="toc-nav-text">awesome cheatsheets collection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Rico’s-cheatsheets-collection"><span class="toc-nav-text">Rico’s cheatsheets collection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#注释规范"><span class="toc-nav-text">注释规范</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#es2015-新特性"><span class="toc-nav-text">es2015 新特性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Javascript"><span class="toc-nav-text">Javascript</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#js正则表达式"><span class="toc-nav-text">js正则表达式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#vue"><span class="toc-nav-text">vue</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#vuex"><span class="toc-nav-text">vuex</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#react"><span class="toc-nav-text">react</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#redux"><span class="toc-nav-text">redux</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Flexbox"><span class="toc-nav-text">Flexbox</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#markdown"><span class="toc-nav-text">markdown</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#用途"><span class="toc-nav-text">用途</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#选择merge"><span class="toc-nav-text">选择merge</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#选择-rebase"><span class="toc-nav-text">选择 rebase</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#交互式rebase"><span class="toc-nav-text">交互式rebase</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#合并提交"><span class="toc-nav-text">合并提交</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#拆分提交"><span class="toc-nav-text">拆分提交</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#删除提交"><span class="toc-nav-text">删除提交</span></a></li></ol></li></ol></li></ol>
     
   </div>
 </aside>
@@ -202,7 +201,7 @@
 
 <script>
   (function () {
-    var url = 'https://snowlotus.github.io/2019/04/11/the-best-front-end-hacking-cheatsheets/';
+    var url = 'https://snowlotus.github.io/2019/06/12/the-difference-between-git-merge-and-git-rebase/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -255,7 +254,7 @@
     });
 
     var gitment = new Gitment({
-        id: '前端API速查', // 可选。默认为 location.href
+        id: 'git操作中的merge和rebase', // 可选。默认为 location.href
         owner: 'snowdrop',
         repo: 'snowlotus.github.com',
         oauth: {
@@ -268,7 +267,7 @@
     /* var gitmentConfig = "snowlotus";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "前端API速查",
+        id: "git操作中的merge和rebase",
         owner: "snowlotus",
         repo: "bolg",
         oauth: {
