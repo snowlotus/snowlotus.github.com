@@ -128,7 +128,7 @@
         <article class="post-article">
             <section class="markdown-content"><p>使用git有几年了，平时最常用到的就是工具<code>source tree</code>和<code>smartgit</code>中的pull 、push、rebase、merge等操作，尤其是合并代码的时候,rebase和merge自然是都会用到的，但从来没有深究过这两种合并代码的方式到底有何差别，使用场景是什么，今天决定一探究竟并记录下来。</p>
 <h1 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h1><p>首先，两者的诞生都是为了解决同样的问题：将一个分支的改变合并到另一个分支上。但两者的实现方式还是有很多差异。</p>
-<p>具体差异借助一个开发中常用的场景来加以说明：当你在一个开发分支上开发一个新功能的时候，团队其他人在master上commit了若干个新的提交，于是分支的历史变成了如下图这样。由于master上的commit对你正在使用的开发分支feature是有意义的，为了将master上的commit合入你的开发feature分支上，你有两个选择：merge或者rebase<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8ke7gu5j20bg07zdfq.jpg" alt="提交历史"></p>
+<p>具体差异借助一个开发中常用的场景来加以说明：当你在一个开发分支上开发一个新功能的时候，团队其他人在master上commit了若干个新的提交，于是分支的历史变成了如下图这样。由于master上的commit对你正在使用的开发分支feature是有意义的，为了将master上的commit合入你的开发feature分支上，你有两个选择：merge或者rebase<br><img src="http://read.html5.qq.com/image?src=forum&amp;q=5&amp;r=0&amp;imgflag=7&amp;imageUrl=http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8ke7gu5j20bg07zdfq.jpg" alt="提交历史"></p>
 <h1 id="选择merge"><a href="#选择merge" class="headerlink" title="选择merge"></a>选择merge</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout feature </span><br><span class="line">git merge master</span><br></pre></td></tr></table></figure>
 <p>合并后，feature分支的提交历史变成了如下图<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8kt3q6aj20da07wa9z.jpg" alt="merge后feature分支的提交log"></p>
 <p>从图中我们可以看到，最终两个分支的历史以分叉线的方式汇合到一起，且在汇合出是一个多出来的新的commit <code>Merge branch &#39;master&#39; into feature</code>.<br><strong>由此我们可以得出使用merge操作的特征</strong></p>
