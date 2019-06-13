@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="fe,personal,record">
+  <meta name="keyword" content="vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      git操作中的merge和rebase | snowdrop
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+</head>
+<div class="wechat-share">
+  <img src="/blog/css/images/logo.png">
+</div>
+
+  
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>snowdrop's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">开源项目</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">开源项目</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="page-content" style="min-height:100%">
+    <div id="article-banner">
+        <h2>git操作中的merge和rebase</h2>
+        <p class="post-date">2019-06-12</p>
+        <div class="arrow-down">
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+    <main class="app-body flex-box" style="padding-bottom:70px;margin-top:20px">
+    <!-- Article START -->
+        <article class="post-article">
+            <section class="markdown-content"><p>使用git有几年了，平时最常用到的就是工具<code>source tree</code>和<code>smartgit</code>中的pull 、push、rebase、merge等操作，尤其是合并代码的时候,rebase和merge自然是都会用到的，但从来没有深究过这两种合并代码的方式到底有何差别，使用场景是什么，今天决定一探究竟并记录下来。</p>
+<h1 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h1><p>首先，两者的诞生都是为了解决同样的问题：将一个分支的改变合并到另一个分支上。但两者的实现方式还是有很多差异。</p>
+<p>具体差异借助一个开发中常用的场景来加以说明：当你在一个开发分支上开发一个新功能的时候，团队其他人在master上commit了若干个新的提交，于是分支的历史变成了如下图这样。由于master上的commit对你正在使用的开发分支feature是有意义的，为了将master上的commit合入你的开发feature分支上，你有两个选择：merge或者rebase<br><img src="http://read.html5.qq.com/image?src=forum&amp;q=5&amp;r=0&amp;imgflag=7&amp;imageUrl=http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8ke7gu5j20bg07zdfq.jpg" alt="提交历史"></p>
+<h1 id="选择merge"><a href="#选择merge" class="headerlink" title="选择merge"></a>选择merge</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout feature </span><br><span class="line">git merge master</span><br></pre></td></tr></table></figure>
+<p>合并后，feature分支的提交历史变成了如下图<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8kt3q6aj20da07wa9z.jpg" alt="merge后feature分支的提交log"></p>
+<p>从图中我们可以看到，最终两个分支的历史以分叉线的方式汇合到一起，且在汇合出是一个多出来的新的commit <code>Merge branch &#39;master&#39; into feature</code>.<br><strong>由此我们可以得出使用merge操作的特征</strong></p>
+<ul>
+<li>merge是一个非破坏性的操作，原有的已经存在的提交（时间先后顺序、log线）等都得到了保留</li>
+<li>产生了一个外来的代表合并的commit。如果master分支非常活跃，会对feature造成大量的历史污染，造成其他开发者难以看懂或理解你的项目的历史记录。</li>
+</ul>
+<h1 id="选择-rebase"><a href="#选择-rebase" class="headerlink" title="选择 rebase"></a>选择 rebase</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout feature </span><br><span class="line">git rebase master</span><br></pre></td></tr></table></figure>
+<p>合并后，feature分支的提交历史变成了如下图<br><img src="http://ww1.sinaimg.cn/large/a64e5cc2gy1fhi8kzq9r3j20fq07vwee.jpg" alt="rebase后feature分支的提交log"></p>
+<p>从上图我们可以看出，整个master分支移动到了feature分支上，且没有使用一个代表 merging 的 commit，整个项目提交历史很清晰。<br><strong>由此我们可以得出使用rebase操作的特征</strong></p>
+<ul>
+<li>没有引入不必要的commit</li>
+<li>整个提交历史是线性无分叉的，便于阅读及清晰操作整个历史记录。但清晰的commit的代价就是失去了可追溯性，因为从现有的提交历史中，已无法得知是在哪个时间点及提交点将上游的master分支合并进入feature分支的。<h2 id="交互式rebase"><a href="#交互式rebase" class="headerlink" title="交互式rebase"></a>交互式rebase</h2>rebase还有一个更高级的用法：交互式变基,除了完成最终的分支合并之外，交互式变基可以帮助我们在变基过程中，增加自己的操作（<strong>合并提交、拆分提交、删除提交</strong>），然后再变基。虽然平时使用得不多，但借助它也可以产生一些神奇的效果，在此也一并简单介绍下。</li>
+</ul>
+<p>交互式rebase对应命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reabse -i</span><br></pre></td></tr></table></figure></p>
+<h3 id="合并提交"><a href="#合并提交" class="headerlink" title="合并提交"></a>合并提交</h3><h3 id="拆分提交"><a href="#拆分提交" class="headerlink" title="拆分提交"></a>拆分提交</h3><h3 id="删除提交"><a href="#删除提交" class="headerlink" title="删除提交"></a>删除提交</h3></section>
+            <!-- Tags START -->
+            
+                <div class="tags">
+                    <span>Tags:</span>
+                    
+  <a href="/tags#git merge rebase">
+    <span class="tag-code">git merge rebase</span>
+  </a>
+
+
+
+                </div>
+            
+            <!-- Tags END -->
+            <!-- view Start -->
+            <div class="article-view">
+                <span id="busuanzi_container_page_pv">浏览量
+                    <i class="fa fa-eye" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                </span>
+            </div>
+            <!-- view END -->
+            <!-- 打赏 START -->
+            
+            <!-- 打赏 END -->
+            <!-- 二维码 START -->
+            
+            <div class="qrcode">
+                <canvas id="share-qrcode"></canvas>
+                <p class="notice">扫描二维码，分享此文章</p>
+            </div>
+            
+            <!-- 二维码 END -->
+            
+                <!-- Gitment START -->
+                <div id="container"></div>
+                <!-- Gitment END -->
+                
+        </article>
+        <!-- Article END -->
+        <!-- Catalog START -->
+        
+            <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#用途"><span class="toc-nav-text">用途</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#选择merge"><span class="toc-nav-text">选择merge</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#选择-rebase"><span class="toc-nav-text">选择 rebase</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#交互式rebase"><span class="toc-nav-text">交互式rebase</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#合并提交"><span class="toc-nav-text">合并提交</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#拆分提交"><span class="toc-nav-text">拆分提交</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#删除提交"><span class="toc-nav-text">删除提交</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+        
+        <!-- Catalog END -->
+    </main>
+</div>
+
+<script>
+  (function () {
+    var url = 'https://snowlotus.github.io/2019/06/12/the-difference-between-git-merge-and-git-rebase/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    var gitment = new Gitment({
+        id: 'git操作中的merge和rebase', // 可选。默认为 location.href
+        owner: 'snowdrop',
+        repo: 'snowlotus.github.com',
+        oauth: {
+            client_id: '389c5a6a03d1cb1b5eba',
+            client_secret: '890c172d5726139fe9b3ab1746c81fe9e806a92d',
+        },
+    })
+    gitment.render('container')
+    // gitment
+    /* var gitmentConfig = "snowlotus";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "git操作中的merge和rebase",
+        owner: "snowlotus",
+        repo: "bolg",
+        oauth: {
+          client_id: "1e6d3e2c526aa5b3f7f9",
+          client_secret: "8a6b6debc72c3a57ae86836d69c5fe2eeea89888"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    } */
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="app-footer">
+  <p class="copyright">
+    &copy;
+    2019 | powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+    <br>
+    Own by <a href="https://snowlotus.github.io/">snowlotus</a>
+  </p>
+
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function () {
+    $('figure pre').each(function (i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script>
+  var _baId = '2aa8428dc529e737ba51867aa3b10791';
+  // Originial
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?" + _baId;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

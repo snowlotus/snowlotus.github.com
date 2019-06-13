@@ -34,16 +34,16 @@ qrcode: true
 comment: gitment
 
 # gitment config
-gitment_owner: KuangPF
+gitment_owner: snowlotus
 gitment_repo: bolg
-gitment_oauth_id: 52d34cfe84bdd73cf53a
-gitment_oauth_secret: 72fa5c33a1748a7c3b770146922c87a5531c9933
+gitment_oauth_id: 1e6d3e2c526aa5b3f7f9
+gitment_oauth_secret: 8a6b6debc72c3a57ae86836d69c5fe2eeea89888
 
 
 # uyan
 # if you want to use uyan as your blog comment, plz remove/comment out gitment config
 
-baidu_id: 
+baidu_id: 2aa8428dc529e737ba51867aa3b10791 
 
 about: 
   banner: http://file.muyutech.com/about.jpg
@@ -55,5 +55,5 @@ about:
   weibo_username: snowlotus
   facebook_username: snowlotus
   github_username: snowlotus
-  zhihu_username: KuangPF
+  zhihu_username: snowlotus
   mail_username: cgi-bin/qm_share?t=qm_mailme&email=qpucmZmZk52Ykpzq29uEycXH

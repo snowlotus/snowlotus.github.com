@@ -5,16 +5,16 @@
 # Site
 title: snowdrop
 subtitle: blog
-description: 
+description: fe,personal,record
 author: snowdrop
 language: 
 timezone:
-logoTitle: FE-blog
+logoTitle: snowdrop's blog
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://snowlotus.github.io/blog/
-root: /blog/
+url: https://snowlotus.github.io/
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -78,6 +78,6 @@ theme: vexo
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:snowlotus/blog.git
+  repo: git@github.com:snowlotus/snowlotus.github.com.git
   branch: master
   message: 'update about'
