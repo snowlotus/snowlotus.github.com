@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+   <!-- <meta name="referrer" content="no-referrer" /> -->
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="fe,personal,record">
+  <meta name="keyword" content="vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      前端页面性能监控小结 | snowdrop
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+</head>
+<div class="wechat-share">
+  <img src="/blog/css/images/logo.png">
+</div>
+
+  
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>snowdrop's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">开源项目</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">开源项目</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="page-content" style="min-height:100%">
+    <div id="article-banner">
+        <h2>前端页面性能监控小结</h2>
+        <p class="post-date">2019-06-28</p>
+        <div class="arrow-down">
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+    <main class="app-body flex-box" style="padding-bottom:70px;margin-top:20px">
+    <!-- Article START -->
+        <article class="post-article">
+            <section class="markdown-content"><p>性能监测是前端页面性能的重要一环，通过监测可以确定页面性能瓶颈，从而有针对性的展开具体的优化工作。<br>在近期调研好伙伴性能优化的过程中，调研了下业界较推崇的两种方式，<strong>可编程方案、可视化方案</strong>。其中可视化方案又有两款比较好用的工具Performance和LightHouse，一起看看如何使用吧。</p>
+<h3 id="可编程方案-W3C-性能-API"><a href="#可编程方案-W3C-性能-API" class="headerlink" title="可编程方案-W3C 性能 API"></a>可编程方案-W3C 性能 API</h3><p>window.Performance是W3C性能小组引入的API，通过相关属性我们可以获取到用户访问页面的每个阶段的精确时间，从而对性能进行分析。<br><em>目前好伙伴项目所接入的听云browser版，本质上也是基于这些api，将各项数据采集上报到听云服务器，并转化成可视化的页面展示方式用于分析页面各项指标</em></p>
+<p>以下是performance对象的完整结构<br><img src="https://upload-images.jianshu.io/upload_images/8878545-e57eba8a5567836c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="performance"></p>
+<p>其中timing下的时间戳和页面加载时间有一个对应关系，如下图所示<br><img src="https://upload-images.jianshu.io/upload_images/8878545-c1395036da4fbc0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="timing"><br>通过求两个时间点之间的差值，可以得出页面各个过程所花费的时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timing = <span class="built_in">window</span>.performance.timing</span><br><span class="line"></span><br><span class="line"><span class="comment">//DNS查询耗时</span></span><br><span class="line"><span class="keyword">const</span> domainTime = timing.domainLookupEnd - timing.domainLookupStart</span><br><span class="line"></span><br><span class="line"><span class="comment">//TCP连接耗时</span></span><br><span class="line"><span class="keyword">const</span> tcpTime = timing.connectEnd - timing.connectStart</span><br><span class="line"></span><br><span class="line"><span class="comment">//内容加载耗时(注意是否存在cache)</span></span><br><span class="line"><span class="keyword">const</span> loadTime = timing.responseEnd - timing.responseStart</span><br><span class="line"></span><br><span class="line"><span class="comment">//白屏时间</span></span><br><span class="line"><span class="keyword">const</span> firstPaintTime = timing.domLoading - timing.fetchStart</span><br><span class="line"></span><br><span class="line"><span class="comment">//可交互时间</span></span><br><span class="line"><span class="keyword">const</span> ttiTime = timing.domInteractive - timing.fetchStart</span><br><span class="line"></span><br><span class="line"><span class="comment">// html加载完成时间;此时可以操作dom</span></span><br><span class="line"><span class="keyword">const</span> domReadyTime = timing.domContentLoadedEventEnd - timing.fetchStart</span><br><span class="line"></span><br><span class="line"><span class="comment">// 页面完全加载完成时间</span></span><br><span class="line"><span class="keyword">const</span> loadCompleteTime = timing.loadEventStart - timing.fetchStart</span><br></pre></td></tr></table></figure></p>
+<h3 id="可视化工具1——Performance"><a href="#可视化工具1——Performance" class="headerlink" title="可视化工具1——Performance"></a>可视化工具1——Performance</h3><p>Performance是chrome浏览器开发者工具的一个面板，用于实时的记录和分析页面在运行时的各项指标。</p>
+<h6 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h6><p>F12打开开发者工具，选中 Performance 面板：<br><img src="https://upload-images.jianshu.io/upload_images/8878545-f9c996290c521a50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="image.png"><br><em>选中实心圆按钮，Performance 会开始帮我们记录我们后续的交互操作；<br>选中刷新箭头按钮，Performance 会将页面重新加载，计算加载过程中的性能表现。</em></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8878545-e33b750c66028f83.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/720" alt="无痕模式"></p>
+<p><em>为了避免其它 Chrome 插件对页面的性能影响，建议最好在无痕模式下打开页面</em></p>
+<h6 id="功能介绍及分析"><a href="#功能介绍及分析" class="headerlink" title="功能介绍及分析"></a>功能介绍及分析</h6><p>以下是好伙伴页面加载过程中的表现，红框部分依次为概述面板、详情面板及绿框的FPS、CPU和NET<br><img src="https://upload-images.jianshu.io/upload_images/8878545-3c6a984e7cffd6cb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1080" alt="好伙伴performance"></p>
+<p><strong>概述面板：</strong>页面性能的汇总</p>
+<p><strong>FPS：</strong> 和动画性能密切相关的指标，表示每一秒的帧数。绿色柱状越高表示帧率越高，体验就越流畅。若出现红色块，则代表长时间帧，很可能会出现卡顿。（图中以绿色为主，说明动画性能并不糟糕。）</p>
+<p><strong>CPU：</strong> 表示CPU的忙闲情况。（一般结合Summary 饼图一起看）</p>
+<p><strong>NET：</strong> 展示各请求的耗时与前后顺序。</p>
+<p><strong>详情面板-Main：</strong> 又称火焰图。在图中我们可以看到3条垂直的线，蓝线代表 DOMContentLoaded 时间， 绿线代表首次绘制（及白屏）的时间，红线代表 load 时间。<br><strong>详情面板-Summary：</strong> 结合CPU可得出，scripting过程最耗时（即脚本执行）</p>
+<h3 id="可视化工具2——LightHouse"><a href="#可视化工具2——LightHouse" class="headerlink" title="可视化工具2——LightHouse"></a>可视化工具2——LightHouse</h3><p>Lighthouse 是一个开源的自动化工具，和Performance不同的是，它可以直接生成一个报告，报告中会对各项指标和优化建议做一个具体的呈现。</p>
+<p><strong>具体操作：</strong><br>方式1：在 Chrome 应用商店下载一个 LightHouse插件，打开要测试的那个页面，点击icon和“Generate report”按钮，即可生成性能报告了。<br>方式2：chrome开发者工具下的audits面板可直接run audits （需要浏览器的版本大于60）<br>下图是生成的报告，同样以好伙伴首页为例<br><img src="https://upload-images.jianshu.io/upload_images/8878545-94c0585f7002b614.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="LightHouse"><br><em>上图从上到下依次为：</em><br>1.当前访问地址、访问时间、模拟设备、网络情况<br>2.页面性能、PWA（渐进式 Web 应用）、可访问性、最佳实践、SEO 五项指标的评分情况<br>3.每一项指标的细化评估<br>4.改进建议以及预计的节省时间（<strong>此项可作为重点依据进行优化</strong> ）</p>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><p><a href="https://developers.google.com/web/tools/lighthouse/?hl=zh-cn" target="_blank" rel="noopener">使用 Lighthouse 审查网络应用</a><br><a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference" target="_blank" rel="noopener">Performance工具</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/performance" target="_blank" rel="noopener">Performance API</a></p>
+</section>
+            <!-- Tags START -->
+            
+                <div class="tags">
+                    <span>Tags:</span>
+                    
+  <a href="/tags#javascript">
+    <span class="tag-code">javascript</span>
+  </a>
+
+  <a href="/tags#性能">
+    <span class="tag-code">性能</span>
+  </a>
+
+  <a href="/tags#监控">
+    <span class="tag-code">监控</span>
+  </a>
+
+
+
+                </div>
+            
+            <!-- Tags END -->
+            <!-- view Start -->
+            <div class="article-view">
+                <span id="busuanzi_container_page_pv">浏览量
+                    <i class="fa fa-eye" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                </span>
+            </div>
+            <!-- view END -->
+            <!-- 打赏 START -->
+            
+            <!-- 打赏 END -->
+            <!-- 二维码 START -->
+            
+            <div class="qrcode">
+                <canvas id="share-qrcode"></canvas>
+                <p class="notice">扫描二维码，分享此文章</p>
+            </div>
+            
+            <!-- 二维码 END -->
+            
+                <!-- Gitment START -->
+                <div id="container"></div>
+                <!-- Gitment END -->
+                
+        </article>
+        <!-- Article END -->
+        <!-- Catalog START -->
+        
+            <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可编程方案-W3C-性能-API"><span class="toc-nav-text">可编程方案-W3C 性能 API</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可视化工具1——Performance"><span class="toc-nav-text">可视化工具1——Performance</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#使用方式"><span class="toc-nav-text">使用方式</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#功能介绍及分析"><span class="toc-nav-text">功能介绍及分析</span></a></li></ol></li></ol><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可视化工具2——LightHouse"><span class="toc-nav-text">可视化工具2——LightHouse</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#推荐阅读"><span class="toc-nav-text">推荐阅读</span></a></li>
+    
+  </div>
+</aside>
+        
+        <!-- Catalog END -->
+    </main>
+</div>
+
+<script>
+  (function () {
+    var url = 'https://snowlotus.github.io/2019/06/28/fe-performance/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    var gitment = new Gitment({
+        id: '前端页面性能监控小结', // 可选。默认为 location.href
+        owner: 'snowdrop',
+        repo: 'snowlotus.github.com',
+        oauth: {
+            client_id: '389c5a6a03d1cb1b5eba',
+            client_secret: '890c172d5726139fe9b3ab1746c81fe9e806a92d',
+        },
+    })
+    gitment.render('container')
+    // gitment
+    /* var gitmentConfig = "snowlotus";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "前端页面性能监控小结",
+        owner: "snowlotus",
+        repo: "bolg",
+        oauth: {
+          client_id: "1e6d3e2c526aa5b3f7f9",
+          client_secret: "8a6b6debc72c3a57ae86836d69c5fe2eeea89888"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    } */
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="app-footer">
+  <p class="copyright">
+    &copy;
+    2019 | powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+    <br>
+    Own by <a href="https://snowlotus.github.io/">snowlotus</a>
+  </p>
+
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function () {
+    $('figure pre').each(function (i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script>
+  var _baId = '2aa8428dc529e737ba51867aa3b10791';
+  // Originial
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?" + _baId;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
