@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+   <!-- <meta name="referrer" content="no-referrer" /> -->
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="fe,personal,record">
+  <meta name="keyword" content="vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      学习笔记-js中难点梳理 | snowdrop
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+</head>
+<div class="wechat-share">
+  <img src="/blog/css/images/logo.png">
+</div>
+
+  
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>snowdrop's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">标签</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">开源项目</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">关于</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">首页</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">标签</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">归档</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">开源项目</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">关于</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="page-content" style="min-height:100%">
+    <div id="article-banner">
+        <h2>学习笔记-js中难点梳理</h2>
+        <p class="post-date">2019-06-18</p>
+        <div class="arrow-down">
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+    <main class="app-body flex-box" style="padding-bottom:70px;margin-top:20px">
+    <!-- Article START -->
+        <article class="post-article">
+            <section class="markdown-content"><p><code>js</code>的语言特性导致有很多知识点在日常开发中容易混淆或者难理解的，在此通过代码示例和文字总结加深理解，同时也方便后续复习查阅</p>
+<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><p>与其它语言相比，函数的<code>this</code>关键字在<code>javascript</code>中表现略不同。此外，在严格模式、非严格模式及<code>es2015</code>的箭头函数中也各有不同。</p>
+<p><strong> 一般情况下（箭头函数除外）,<code>this</code>的指向与声明位置无关，与调用位置有关 </strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name=<span class="string">"window"</span>;</span><br><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">  name:<span class="string">'obj'</span>,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> otherObj=&#123;</span><br><span class="line">  name:<span class="string">'otherObj'</span>,</span><br><span class="line">  showName:obj.showName</span><br><span class="line">&#125;</span><br><span class="line">obj.showName(); <span class="comment">//obj</span></span><br><span class="line">otherObj.showName();<span class="comment">//otherObj</span></span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  此时调用<code>showName</code>方法的是<code>obj</code>，故<code>this</code>指向<code>obj</code><br></p>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> anotherObj=&#123;</span><br><span class="line">  name:<span class="string">'anotherObj'</span>,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//tempFunc =function()&#123;console.log(this.name)&#125;</span></span><br><span class="line">    <span class="keyword">var</span> tempFunc=obj.showName;</span><br><span class="line">    tempFunc();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> anonymousObj=&#123;</span><br><span class="line">  name:<span class="string">'anonymousObj'</span>,</span><br><span class="line">  foo:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//this.foo=function()&#123;</span></span><br><span class="line">    <span class="comment">//   console.log(this.name)</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// cb=this.foo,cb是一个匿名函数，</span></span><br><span class="line">    <span class="comment">// 匿名函数在执行时，this也是指向window</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params">cb</span>)</span>&#123;</span><br><span class="line">      cb();</span><br><span class="line">    &#125;)(<span class="keyword">this</span>.foo)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">anotherObj.showName() ;<span class="comment">//undefined</span></span><br><span class="line">anonymousObj.showName();<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  1. 在<code>anotherObj</code>的作用域中调用的<code>tempFunc</code>，<code>tempFunc</code>中的<code>this</code>无明确指向，故指向<code>window</code><br>  2. 在<code>anonymousObj</code>的作用域中执行匿名函数，this也是指向window<br></p>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">  name:<span class="string">'obj'</span>,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> anotherObj=&#123;</span><br><span class="line">  name:<span class="string">'anotherObj'</span>,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tempFunc=obj.showName;</span><br><span class="line">    tempFunc();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.showName.apply();<span class="comment">//undefined 此时虽然时obj调用showName方法</span></span><br><span class="line">obj.showName.apply(anotherObj); <span class="comment">//anotherObj</span></span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  <code>apply</code>可以改变<code>this</code>的指向为第一个参数<br>  故在<code>obj.showName.apply()</code>中this指向空，即window<br>  在<code>obj.showName.apply(anotherObj)</code>中this指向空anotherObj<br></p>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arrowObj=&#123;</span><br><span class="line">  name:<span class="string">'arrowObj'</span>,</span><br><span class="line">  showName:<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">//this 指向undefined（即全局对象window），具体可查看babel转义后的结果</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arrowObj1=&#123;</span><br><span class="line">  name:<span class="string">'arrowObj1'</span>,</span><br><span class="line">  showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;,<span class="number">0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">arrowObj.showName();<span class="comment">//undefined</span></span><br><span class="line">arrowObj1.showName(); <span class="comment">//'arrowObj1'</span></span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  在es6中，箭头函数（又称lamdba表达式），是在声明的时候绑定this的而非调用时<br></p>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line">  <span class="keyword">var</span> name=<span class="string">'snowdrop'</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name); <span class="comment">//Uncaught TypeError: Cannot read property 'name' of undefined  </span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line">  <span class="built_in">console</span>.assert(fun() === <span class="literal">undefined</span>);</span><br><span class="line">  <span class="built_in">console</span>.assert(fun.apply(<span class="literal">null</span>) === <span class="literal">null</span>);</span><br><span class="line">  <span class="built_in">console</span>.assert(fun.call(<span class="literal">undefined</span>) === <span class="literal">undefined</span>);</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  在严格模式和非严格模式下，this的指向还略有不同<br>  从上述结果可知，严格模式下，this没有明确指向时,指向undefinde而非window<br></p>
+
+<p><strong>从上述代码片段及运行结果可得知，<code>this</code>有以下特性（坑）</strong></p>
+<ul>
+<li>this 的指向和调用位置有关，与声明位置无关</li>
+<li>没有明确指向的时候，this指向window</li>
+<li>在浏览器环境下，setTimeout、setInterval和匿名函数执行时this的指向为全局对象window</li>
+<li>call和apply能够强制改变this的指向为当前的第一个传参</li>
+<li>在es6中，箭头函数（又称lamdba表达式），是在声明的时候绑定this的</li>
+<li>严格模式下，this没有明确指向时,指向undefinde而非window</li>
+</ul>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>js中的作用域也是一个非常重要和易出错的地方，话不多说，先上代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo();<span class="comment">//undefined</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(a);</span><br><span class="line">   <span class="keyword">var</span> a=<span class="number">2</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>上面的代码在执行时别js引擎解析成如下的代码<br><code>function foo(){
+  var a;//undefined
+  console.log(a);
+  a=2; 
+}
+foo();</code><br></p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show();//TypeError: show is not a function</span><br><span class="line">var show=function ()&#123;</span><br><span class="line">  console.log(1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>上面代码等价与下面<br><code>var show;//undefined
+show ();
+show=function (){
+  console.log(1)
+}</code><br></p>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> show; <span class="comment">// function  </span></span><br><span class="line"><span class="keyword">var</span> show=<span class="number">11</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'show'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>上面代码等价于以下代码<br>function show(){<br>  console.log(‘show’)<br>}<br>var show=11;<br>typeof show;<br>故由此可知，函数的变量提升优于变量<br></p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(someVar ===undefined)&#123;</span><br><span class="line">  var someVar=1;</span><br><span class="line">  console.log(someVar)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>虽然此处有<code>if</code>,但js中没有块级作用域的概念，变量<code>someVar</code>依然也会发生作用域提升。<br></p>
+
+<p><strong>从上述代码片段及运行结果可得知，js的作用域有以下特性</strong></p>
+<ul>
+<li>函数和变量的声明都会产生作用域提升</li>
+<li>变量的上升只是声明会提升，赋值不会</li>
+<li>函数表达式（包括匿名和具名）不会发生作用域提升</li>
+<li>函数提升的优先级高于变量，且不会被同名变量覆盖</li>
+<li>声明的提升不会被条件判断给控制住（不过不同浏览器的实现不同，有的会控制有的不会控制）</li>
+</ul>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p><em>TODO 此部分还有很多没理解，待深究</em></p>
+<h2 id="es6中的继承特性"><a href="#es6中的继承特性" class="headerlink" title="es6中的继承特性"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">es6中的继承特性</a></h2><ul>
+<li>使用extends关键字</li>
+<li>子类继承父类时，子类的构造函数需要显式的调用下父类的super方法</li>
+<li>可以定义static方法</li>
+</ul>
+<h2 id="ES5实现继承的黑魔法"><a href="#ES5实现继承的黑魔法" class="headerlink" title="ES5实现继承的黑魔法"></a><a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="noopener">ES5实现继承的黑魔法</a></h2><h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Super</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name=<span class="string">'super'</span>;</span><br><span class="line">&#125;</span><br><span class="line">Super.prototype.showName=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sub</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name=<span class="string">'sub'</span>;</span><br><span class="line">  <span class="keyword">this</span>.age=<span class="number">24</span>;</span><br><span class="line">&#125;</span><br><span class="line">Sub.prototype=<span class="keyword">new</span> Super();</span><br><span class="line">Sub.prototype.showAge=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>原型链继承的缺点：父类的构造函数会在创建子类及实例化子类的时候分别各执行了一次，造成了内存的浪费<br></p>
+
+<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><p>由于原型继承存在上述缺点，所有就有了组合继承，F是空对象，所以几乎不占内存<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">Child, Parent</span>) </span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">　　　　F.prototype = Parent.prototype;</span><br><span class="line">　　　　Child.prototype = <span class="keyword">new</span> F();</span><br><span class="line">　　　　Child.prototype.constructor = Child;</span><br><span class="line">　　　　Child.uber = Parent.prototype;</span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用的时候，方法如下</span></span><br><span class="line">extend(Cat,Animal);</span><br><span class="line"><span class="keyword">var</span> cat1 = <span class="keyword">new</span> Cat(<span class="string">"大毛"</span>,<span class="string">"黄色"</span>);</span><br><span class="line">alert(cat1.species); <span class="comment">// 动物</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><p>跨域的定义：协议&amp;域名&amp;端口有任何一个不相同，则称这两个域名是跨域的</p>
+<p>跨域的限制?</p>
+<ol>
+<li>Cookie、localstorage、indexDB无法读取</li>
+<li>DOM无法取得</li>
+<li>ajax网络请求无法发出</li>
+</ol>
+<p>常用的跨域方式有以下5种</p>
+<ul>
+<li>jsonp</li>
+<li>服务器请求头设置允许跨域</li>
+<li>iframe+hash传值</li>
+<li>iframe+name传值</li>
+<li>postMessage</li>
+</ul>
+<p>下面借助实现方式及细节来介绍下5种跨域方式，具体代码可参见<a href="https://github.com/snowlotus/homework/tree/master/learn-js/crossSite" target="_blank" rel="noopener">github</a></p>
+<h2 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个全局的回调方法</span></span><br><span class="line"><span class="built_in">window</span>.xxx = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//向服务器发起jsonp请求，传递约定好的callback参数</span></span><br><span class="line">script.src = <span class="string">'http://x.localhost.com:7001/json?callback=xxx'</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(script)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(&apos;/json&apos;, app.jsonp(&#123; callback: &apos;callback&apos; &#125;), app.controller.json.index)</span><br></pre></td></tr></table></figure>
+<p class="tip"><br>  在js中需要定义一个全局方法，方法名你和服务端约定好的callback方法名，方法体为拿到返回值后的执行逻辑<br>  在服务端代码（本处用node实现），接受callback请求，执行逻辑返回一个json数据<br>  该方法只支持get请求，即使使用jquery的jsonp方法，type设为POST，也会自动变为GET<br></p>
+
+<h2 id="Access-Control-Allow-Origin"><a href="#Access-Control-Allow-Origin" class="headerlink" title="Access-Control-Allow-Origin"></a>Access-Control-Allow-Origin</h2><p>本方式是在服务端配置针对某个域名的请求设置是否允许跨域，即可以在响应头中通过代码实现，也可以在如nginx服务器配置项中设置，本次以代码的方式加以说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">module.exports = app =&gt; &#123;</span><br><span class="line">  class CrosController extends app.Controller &#123;</span><br><span class="line">    * index(req) &#123;</span><br><span class="line">      // https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS</span><br><span class="line">      /* comment:设置响应头Access-Control-Allow-Origin </span><br><span class="line">      设置为* ，表示该资源可以被任意外域访问，</span><br><span class="line">      但会导致浏览器cookie无法发送到服务器，即使配置Access-Control-Allow-Credentials：true 也不行 */</span><br><span class="line"></span><br><span class="line">      // this.ctx.set(&apos;Access-Control-Allow-Origin&apos;, &apos;*&apos;)</span><br><span class="line"></span><br><span class="line">      /* comment: </span><br><span class="line">      如果我们想要 http://*.localhost.com 都支持跨域怎么办？</span><br><span class="line">      首先肯定不能直接写this.ctx.set(&apos;Access-Control-Allow-Origin&apos;, &apos;http://*.localhost.com&apos;)</span><br><span class="line">      这样只会对http://*.localhost.com 这个域名才跨域生效</span><br><span class="line">      见上述正则</span><br><span class="line">      */</span><br><span class="line">      this.ctx.set(&apos;Access-Control-Allow-Origin&apos;, originReg(req.header.origin))</span><br><span class="line"></span><br><span class="line">      /* comment：如何把Cookie发到服务器？</span><br><span class="line">      一方面要服务器同意，指定Access-Control-Allow-Credentials:true</span><br><span class="line">      另一方面，开发者必须在AJAX请求中打开withCredentials属性。xhr.withCredentials = true;</span><br><span class="line">      */</span><br><span class="line">     this.ctx.set(&apos;Access-Control-Allow-Credentials&apos;,&apos;true&apos;)</span><br><span class="line">      this.ctx.body = &#123; msg: &apos;hello world&apos; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return CrosController</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="iframe-hash-or-name"><a href="#iframe-hash-or-name" class="headerlink" title="iframe hash or name"></a>iframe hash or name</h2><p>这两种方式都差不多，将需要跨域的域通过iframe的方式加载，通过name或hash值的设置来达到跨域的目的。不太常用，仅做了解不做详细说明，具体可看例子中的<code>3.js</code>和<code>4.js</code>这两个文件</p>
+<h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><p>postMessage是html5引入的API,允许来自不同源的脚本采用异步方式进行有效的通信,可以实现跨文本文档,多窗口,跨域消息传递,具体实现方式如下。</p>
+<p><strong>父窗体创建跨域iframe并发送信息</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>跨域POST消息发送<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/JavaScript"</span>&gt;</span><span class="undefined">    </span></span><br><span class="line"><span class="javascript">            <span class="comment">// sendPost 通过postMessage实现跨域通信将表单信息发送到 moweide.gitcafe.io上,</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 并取得返回的数据    </span></span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">sendPost</span>(<span class="params"></span>) </span>&#123;        </span></span><br><span class="line"><span class="javascript">                <span class="comment">// 获取id为otherPage的iframe窗口对象        </span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> iframeWin = <span class="built_in">document</span>.getElementById(<span class="string">"otherPage"</span>).contentWindow;        </span></span><br><span class="line"><span class="javascript">                <span class="comment">// 向该窗口发送消息        </span></span></span><br><span class="line"><span class="javascript">                iframeWin.postMessage(<span class="built_in">document</span>.getElementById(<span class="string">"message"</span>).value, </span></span><br><span class="line"><span class="javascript">                    <span class="string">'http://moweide.gitcafe.io'</span>);    </span></span><br><span class="line"><span class="undefined">            &#125;    </span></span><br><span class="line"><span class="javascript">            <span class="comment">// 监听跨域请求的返回    </span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;        </span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(event, event.data);    </span></span><br><span class="line"><span class="javascript">            &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">"message"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"发送"</span> <span class="attr">onclick</span>=<span class="string">"sendPost()"</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">iframe</span></span></span><br><span class="line"><span class="tag">            <span class="attr">src</span>=<span class="string">"http://moweide.gitcafe.io/other-domain.html"</span> <span class="attr">id</span>=<span class="string">"otherPage"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">style</span>=<span class="string">"display:none"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>子窗体接收信息并处理</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">        &lt;title&gt;POST Handler&lt;/title&gt;</span><br><span class="line">        &lt;script src=&quot;//code.jquery.com/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">        &lt;script type=&quot;text/JavaScript&quot;&gt;</span><br><span class="line">            window.addEventListener(&quot;message&quot;, function( event ) &#123;</span><br><span class="line">                // 监听父窗口发送过来的数据向服务器发送post请求</span><br><span class="line">                var data = event.data;</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    // 注意这里的url只是一个示例.实际练习的时候你需要自己想办法提供一个后台接口</span><br><span class="line">                    type: &apos;POST&apos;, </span><br><span class="line">                    url: &apos;http://moweide.gitcafe.io/getData&apos;,</span><br><span class="line">                    data: &quot;info=&quot; + data,</span><br><span class="line">                    dataType: &quot;json&quot;</span><br><span class="line">                &#125;).done(function(res)&#123;        </span><br><span class="line">                    //将请求成功返回的数据通过postMessage发送给父窗口        </span><br><span class="line">                    window.parent.postMessage(res, &quot;*&quot;);    </span><br><span class="line">                &#125;).fail(function(res)&#123;        </span><br><span class="line">                    //将请求失败返回的数据通过postMessage发送给父窗口        </span><br><span class="line">                    window.parent.postMessage(res, &quot;*&quot;);    </span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;, false);</span><br><span class="line">        &lt;/script&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line"></span><br><span class="line">    &lt;body&gt;&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></section>
+            <!-- Tags START -->
+            
+                <div class="tags">
+                    <span>Tags:</span>
+                    
+  <a href="/tags#学习笔记">
+    <span class="tag-code">学习笔记</span>
+  </a>
+
+  <a href="/tags#js">
+    <span class="tag-code">js</span>
+  </a>
+
+  <a href="/tags#知识梳理">
+    <span class="tag-code">知识梳理</span>
+  </a>
+
+
+
+                </div>
+            
+            <!-- Tags END -->
+            <!-- view Start -->
+            <div class="article-view">
+                <span id="busuanzi_container_page_pv">浏览量
+                    <i class="fa fa-eye" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                </span>
+            </div>
+            <!-- view END -->
+            <!-- 打赏 START -->
+            
+            <!-- 打赏 END -->
+            <!-- 二维码 START -->
+            
+            <div class="qrcode">
+                <canvas id="share-qrcode"></canvas>
+                <p class="notice">扫描二维码，分享此文章</p>
+            </div>
+            
+            <!-- 二维码 END -->
+            
+                <!-- Gitment START -->
+                <div id="container"></div>
+                <!-- Gitment END -->
+                
+        </article>
+        <!-- Article END -->
+        <!-- Catalog START -->
+        
+            <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#this"><span class="toc-nav-text">this</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#作用域"><span class="toc-nav-text">作用域</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#继承"><span class="toc-nav-text">继承</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#es6中的继承特性"><span class="toc-nav-text">es6中的继承特性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ES5实现继承的黑魔法"><span class="toc-nav-text">ES5实现继承的黑魔法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#原型链继承"><span class="toc-nav-text">原型链继承</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#组合继承"><span class="toc-nav-text">组合继承</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#跨域"><span class="toc-nav-text">跨域</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jsonp"><span class="toc-nav-text">jsonp</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Access-Control-Allow-Origin"><span class="toc-nav-text">Access-Control-Allow-Origin</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#iframe-hash-or-name"><span class="toc-nav-text">iframe hash or name</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#postMessage"><span class="toc-nav-text">postMessage</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+        
+        <!-- Catalog END -->
+    </main>
+</div>
+
+<script>
+  (function () {
+    var url = 'https://snowlotus.github.io/2019/06/18/note-of-the-difficulty-in-javascript/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    var gitment = new Gitment({
+        id: '学习笔记-js中难点梳理', // 可选。默认为 location.href
+        owner: 'snowdrop',
+        repo: 'snowlotus.github.com',
+        oauth: {
+            client_id: '389c5a6a03d1cb1b5eba',
+            client_secret: '890c172d5726139fe9b3ab1746c81fe9e806a92d',
+        },
+    })
+    gitment.render('container')
+    // gitment
+    /* var gitmentConfig = "snowlotus";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "学习笔记-js中难点梳理",
+        owner: "snowlotus",
+        repo: "bolg",
+        oauth: {
+          client_id: "1e6d3e2c526aa5b3f7f9",
+          client_secret: "8a6b6debc72c3a57ae86836d69c5fe2eeea89888"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    } */
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="app-footer">
+  <p class="copyright">
+    &copy;
+    2019 | powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+    <br>
+    Own by <a href="https://snowlotus.github.io/">snowlotus</a>
+  </p>
+
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function () {
+    $('figure pre').each(function (i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script>
+  var _baId = '2aa8428dc529e737ba51867aa3b10791';
+  // Originial
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?" + _baId;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

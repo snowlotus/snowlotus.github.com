@@ -1,0 +1,59 @@
+author: snowdrop # 作者
+description: bolg
+keyword: vuejs
+favicon: 
+title: snowdrop
+logoTitle: FE
+
+excerpt_link: Read more
+
+menu:
+ 首页: /
+ 标签: /tags/
+ 归档: /archives/
+ 开源项目: /project/
+ 关于: /about/
+
+# highlight
+highlight:
+  tomorrow
+
+# catalog
+catalog: true
+
+# donate
+donate: false
+
+# qrcode
+qrcode: true
+
+# comment
+# you can set gitment or uyan
+
+
+comment: gitment
+
+# gitment config
+gitment_owner: snowlotus
+gitment_repo: bolg
+gitment_oauth_id: 1e6d3e2c526aa5b3f7f9
+gitment_oauth_secret: 8a6b6debc72c3a57ae86836d69c5fe2eeea89888
+
+
+# uyan
+# if you want to use uyan as your blog comment, plz remove/comment out gitment config
+
+baidu_id: 2aa8428dc529e737ba51867aa3b10791 
+
+about: 
+  banner: http://file.muyutech.com/about.jpg
+  avatar: https://avatars2.githubusercontent.com/u/20694238?s=460&v=4
+  description: 其实，敲代码不是爱好，也许...
+  # Links
+	segmentfault_username: snowlotus
+  home_url: https://snowlotus.github.io
+  weibo_username: snowlotus
+  facebook_username: snowlotus
+  github_username: snowlotus
+  zhihu_username: snowlotus
+  mail_username: cgi-bin/qm_share?t=qm_mailme&email=qpucmZmZk52Ykpzq29uEycXH
